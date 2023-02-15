@@ -1,0 +1,46 @@
+import React from 'react'
+export default class Card extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      number_item: 1
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.default_num = this.default_num.bind(this);    
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: Number(value)
+    });
+  }
+
+  default_num(n) {
+
+    this.setState({
+      number_item: 1
+    });
+  }
+  
+  render() { 
+    return(
+      <div className="shop-container"> 
+        <div className="shop-container-card">
+            <p className="shop-container-card__name" id="item_name_2">{this.props.item.name}</p>
+            <img className="shop-container-card__image" id="item_image_2" src={this.props.item.image} alt="Фото товара" height="200px"/>
+            <p className="shop-container-card__discription">{this.props.item.discription}</p>
+            <div className="shop-container-card__container-price-buy-button">
+                <p className="shop-container-card__price"><span className="shop-container-card__price-value" id="item_price_2">{this.props.item.price}</span>₽</p>
+                <input  name="number_item" id={"item_num_" + String(this.props.index)} className="shop-container-card__number" type="number" value={this.state.number_item} onChange={this.handleInputChange}  size="3"  min="1" max="99"/>
+                <input name="number_item_button" type="button" value="В корзину" className="shop-container-card__buy-button" onClick={() => {this.props.addCard(this.props.item, this.state.number_item); this.default_num(this.props.index); }} />
+            </div>
+        </div>
+      </div>
+    );
+  };
+}
